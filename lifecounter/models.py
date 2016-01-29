@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-# from django.db.models import Count, Q
+from django.db.models import Max, Q
 
 
 class Game(models.Model):
@@ -19,10 +19,14 @@ class Game(models.Model):
 
 class PlayerQuerySet(models.QuerySet):
     def alive(self):
-        return self.filter(life_total__gt=0, poison_counters__lt=10, damage_taken__cmdr_dmg__lt=21)
+        return self.annotate(Max('damage_taken__cmdr_dmg')).filter(
+            Q(life_total__gt=0, poison_counters__lt=10,) &
+            (Q(damage_taken__cmdr_dmg__max__lt=21) | Q(damage_taken__cmdr_dmg__max__isnull=True)))
 
     def dead(self):
-        return self.exclude(life_total__gt=0, poison_counters__lt=10, damage_taken__cmdr_dmg__lt=21)
+        return self.annotate(Max('damage_taken__cmdr_dmg')).exclude(
+            Q(life_total__gt=0, poison_counters__lt=10,) &
+            (Q(damage_taken__cmdr_dmg__max__lt=21) | Q(damage_taken__cmdr_dmg__max__isnull=True)))
 
 
 class Player(models.Model):
