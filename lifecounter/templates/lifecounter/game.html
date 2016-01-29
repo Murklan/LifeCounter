@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game.password }}</title>
+</head>
+<body>
+
+{% if game %}
+<p>Password: {{game.password}}</p>
+<p>Max Players: {{game.max_players}}</p>
+<p>Starting Life: {{game.starting_life}}</p>
+
+<h3><b>Players still in game:</b></h3>
+    {% for player in game.players.alive %}
+        <b>{{ player.name }}</b><br>
+        Life Total: {{ player.life_total }}<br>
+        Poison Counters: {{ player.poison_counters }}<br>
+        Experience Counters: {{ player.exp_counters }}<br>
+        Commander Damage:
+        {% for damage in player.damage_taken.all %}
+            {{ damage.from_player }} ({{ damage.cmdr_dmg }})
+        {% endfor %}
+        <hr>
+    {% endfor %}
+
+<h3><b>RIP in Piece:</b></h3>
+    {% for player in game.players.dead %}
+        <b>{{ player.name }}</b><br>
+        Life Total: {{ player.life_total }}<br>
+        Poison Counters: {{ player.poison_counters }}<br>
+        Experience Counters: {{ player.exp_counters }}<br>
+        Commander Damage:
+        {% for damage in player.damage_taken.all %}
+            {{ damage.from_player }} ({{ damage.cmdr_dmg }})
+        {% endfor %}
+        <hr>
+    {% endfor %}
+
+{% else %}
+    <p>No Players in this game</p>
+{% endif %}
+
+</body>
+</html>
