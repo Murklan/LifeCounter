@@ -38,7 +38,7 @@ class Player(models.Model):
 
     game = models.ForeignKey(Game, related_name='players')
     name = models.CharField(max_length=20)
-    life_total = models.PositiveIntegerField()
+    life_total = models.PositiveIntegerField(default=0)
     exp_counters = models.PositiveIntegerField(default=0)
     poison_counters = models.PositiveIntegerField(default=0)
 

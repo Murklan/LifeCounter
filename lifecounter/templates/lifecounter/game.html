@@ -14,10 +14,12 @@
 <h3><b>Players still in game:</b></h3>
     {% for player in game.players.alive %}
         <b>{{ player.name }}</b><br>
-        Life Total: {{ player.life_total }}<br>
+        Life Total: {{ player.life_total }}
+        <form action="{% url 'update_life' player.id %}" method="PUT">{% csrf_token %}<button type="submit">+</button></form>
+        <button type="submit" formmethod="POST" formaction="//">-</button><br>
         Poison Counters: {{ player.poison_counters }}<br>
         Experience Counters: {{ player.exp_counters }}<br>
-        Commander Damage:
+        Commander Damage Taken:
         {% for damage in player.damage_taken.all %}
             {{ damage.from_player }} ({{ damage.cmdr_dmg }})
         {% endfor %}
@@ -30,7 +32,7 @@
         Life Total: {{ player.life_total }}<br>
         Poison Counters: {{ player.poison_counters }}<br>
         Experience Counters: {{ player.exp_counters }}<br>
-        Commander Damage:
+        Commander Damage Taken:
         {% for damage in player.damage_taken.all %}
             {{ damage.from_player }} ({{ damage.cmdr_dmg }})
         {% endfor %}

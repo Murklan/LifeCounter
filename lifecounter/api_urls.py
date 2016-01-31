@@ -1,9 +1,10 @@
 from django.conf.urls import url, include
-from lifecounter.serializers import GameViewSet
+from lifecounter.serializers import GameViewSet, PlayerViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'game', GameViewSet)
+router.register(r'player', PlayerViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

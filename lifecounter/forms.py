@@ -8,7 +8,7 @@ class GameForm(forms.ModelForm):
         fields = ['starting_life', 'max_players']
 
 
-class PlayerForm(forms.ModelForm):
-    class Meta:
-        model = Player
-        fields = ['name', ]
+class PlayerForm(forms.Form):
+
+    name = forms.CharField(label='Nickname', max_length=20)
+    pw = forms.CharField(label='Password', max_length=5)

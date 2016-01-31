@@ -6,12 +6,8 @@
 </head>
 <body>
 
-<form action="/create_game/" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Create Game">
-</form>
-
+<a href="{% url 'create_game' %}">Click here to start a New Game</a><br>
+<a href="{% url 'register_player' %}">Click here to Join Game</a>
 
 </body>
 </html>

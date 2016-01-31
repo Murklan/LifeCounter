@@ -31,3 +31,8 @@ class GameViewSet(viewsets.ModelViewSet):
     serializer_class = GameSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('players',)
+
+
+class PlayerViewSet(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
