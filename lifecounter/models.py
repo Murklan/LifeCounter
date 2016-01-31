@@ -9,7 +9,7 @@ class Game(models.Model):
     def __unicode__(self):
         return 'Game ID: ' + self.password
 
-    password = models.CharField(max_length=5)
+    password = models.CharField(max_length=5, unique=True)
     max_players = models.PositiveIntegerField()
     starting_life = models.PositiveIntegerField()
 

@@ -6,4 +6,5 @@ appname = 'game'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^game/(?P<game_id>[A-Z0-9]+)/', views.game, name='game'),
+    url(r'^create_game/', views.create_game, name='create_game'),
 ]
