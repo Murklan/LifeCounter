@@ -11,11 +11,11 @@ class CommanderDamageSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PlayerSerializer(serializers.HyperlinkedModelSerializer):
-    damage_dealt = CommanderDamageSerializer(many=True, read_only=True)
+    damage_taken = CommanderDamageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Player
-        fields = ('id', 'game', 'name', 'life_total', 'exp_counters', 'poison_counters', 'damage_dealt')
+        fields = ('id', 'game', 'name', 'life_total', 'exp_counters', 'poison_counters', 'damage_taken')
 
 
 class GameSerializer(serializers.HyperlinkedModelSerializer):

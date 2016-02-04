@@ -1,20 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-from rest_framework.decorators import api_view
-from rest_framework import status
-from rest_framework.response import Response
 
 from .models import Game, Player
 from .forms import GameForm, PlayerForm
-from .serializers import PlayerSerializer
+
 import passwordgenerator
 
 pw = passwordgenerator
 
 
 def index(request):
-    form = {'form': GameForm}
-    return render(request, 'lifecounter/index.html', form)
+    return render(request, 'lifecounter/index.html')
 
 
 def show_game(request, game_id):
@@ -63,22 +59,4 @@ def create_player(request):
         return render(request, 'lifecounter/player.html', {'form': form})
 
 
-@api_view(['PUT', 'GET'])
-def change_life_total(request, player_id):
-    if request.method == 'GET':
-        player = Player.objects.all()
-        serializer = PlayerSerializer(player, many=True, context={'request': request})
-        return Response(serializer.data)
-
-    if request.method == 'PUT':
-        player = Player.objects.get(id=player_id)
-        data = {'id': player.id,
-                'life_total': player.life_total + 1,
-                'name': player.name,
-                'game': 'http://localhost:8000/api/game/'+str(player.game.id)+'/'}
-        serializer = PlayerSerializer(data=data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

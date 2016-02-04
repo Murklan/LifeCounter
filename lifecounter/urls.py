@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from . import views
 
@@ -10,5 +10,4 @@ urlpatterns = [
     url(r'^start_game/', views.start_game, name='start_game'),
     url(r'^register_player/', views.register_player, name='register_player'),
     url(r'^create_player/', views.create_player, name='create_player'),
-    url(r'^update_life/(?P<player_id>[0-9]+)/', views.change_life_total, name='update_life'),
 ]

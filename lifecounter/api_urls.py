@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from lifecounter.serializers import GameViewSet, PlayerViewSet
 from rest_framework import routers
+from . import views
 
 router = routers.DefaultRouter()
 router.register(r'game', GameViewSet)

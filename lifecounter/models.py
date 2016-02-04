@@ -5,13 +5,12 @@ from django.db.models import Max, Q
 
 
 class Game(models.Model):
-
-    def __unicode__(self):
-        return 'Game ID: ' + self.password
-
     password = models.CharField(max_length=5, unique=True)
     max_players = models.PositiveIntegerField()
     starting_life = models.PositiveIntegerField()
+
+    def __unicode__(self):
+        return 'Game ID: ' + self.password
 
     def start_game(self):
         self.players.update(life_total=self.starting_life)
@@ -30,27 +29,25 @@ class PlayerQuerySet(models.QuerySet):
 
 
 class Player(models.Model):
-
-    def __unicode__(self):
-        return self.name
-
-    objects = PlayerQuerySet.as_manager()
-
     game = models.ForeignKey(Game, related_name='players')
     name = models.CharField(max_length=20)
     life_total = models.PositiveIntegerField(default=0)
     exp_counters = models.PositiveIntegerField(default=0)
     poison_counters = models.PositiveIntegerField(default=0)
 
-
-class CommanderDamage(models.Model):
+    objects = PlayerQuerySet.as_manager()
 
     def __unicode__(self):
-        return self.from_player.name + ' > ' + self.to_player.name + ' : ' + str(self.cmdr_dmg)
+        return self.name
 
+
+class CommanderDamage(models.Model):
     from_player = models.ForeignKey(Player, related_name='damage_dealt')
     to_player = models.ForeignKey(Player, related_name='damage_taken')
     cmdr_dmg = models.PositiveIntegerField(default=0)
+
+    def __unicode__(self):
+        return self.from_player.name + ' > ' + self.to_player.name + ' : ' + str(self.cmdr_dmg)
 
     class Meta:
         unique_together = (('to_player', 'from_player'),)
